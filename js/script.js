@@ -1,36 +1,18 @@
 'use strict';
 
-function getDivisors(num) {
-	let result = [];
+ let str = '123456';
 
-	for (let i = 1; i <= num; i++) {
-		if(num % i == 0) {
-			result.push(i);
-		}
-	}
+ function toRearrange(text) {
+   let arr = text.split('');
+   let arrNew = [];// сюда будем добавлять пары 21, 43 и т.д.
 
-	return result;
-}
+   for (let i = 0; i < arr.length; i += 2) { // нарезаем пары
+     let temp = arr.slice(i, i + 2).reverse(); // маленький массив из очередных 2 элеметов, поменянных местами
+     arrNew = arrNew.concat(temp); // push() тут не подходит
+   }
 
-console.log(getDivisors(24));
+ str = arrNew.join('');
+ return str;
+ }
 
-
-/* function isSimple(num){
-    for (let i = 2; i < num; i++) {
-    if (num % i == 0) {
-        return false;
-    }    
-    }
-    return true;
-}
- 
- 
-function getSimpleDivisors(num){
-    for(let j=1; j<num; j++){
-        if(num % j == 0 && isSimple(j)){
-            console.log(j);
-        }
-    }
-}
- 
-console.log(getSimpleDivisors(99)); */
+console.log(toRearrange(str));
