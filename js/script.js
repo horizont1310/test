@@ -1,18 +1,26 @@
-'use strict';
+"use strict";
 
- let str = '123456';
+const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam', 'Ta'];
 
- function toRearrange(text) {
-   let arr = text.split('');
-   let arrNew = [];// сюда будем добавлять пары 21, 43 и т.д.
+function sortStudentsByGroups(arr) {
+    arr.sort();
+    const a = [],
+          b = [],
+          c = [],
+          res = [];
 
-   for (let i = 0; i < arr.length; i += 2) { // нарезаем пары
-     let temp = arr.slice(i, i + 2).reverse(); // маленький массив из очередных 2 элеметов, поменянных местами
-     arrNew = arrNew.concat(temp); // push() тут не подходит
-   }
+    for (let i = 0; i < arr.length; i++) {
+        if (i < 3) {
+            a.push(arr[i]);
+        } else if (i < 6) {
+            b.push(arr[i]);
+        } else if (i < 9) {
+            c.push(arr[i]);
+        } else {
+            res.push(arr[i]);
+        }
+    }
+    return [a, b,  c, `Оставшиеся студенты: ${res.length === 0 ? '-' : res.join(', ')}`];
+}
 
- str = arrNew.join('');
- return str;
- }
-
-console.log(toRearrange(str));
+console.log(sortStudentsByGroups(students));
