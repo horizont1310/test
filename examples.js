@@ -322,3 +322,20 @@ function students() {
 
   console.log(sortStudentsByGroups(students));
 }
+
+
+//⁡⁣⁢⁢Это одна из классических задач в программировании на формирование самых разных фигур при помощи кода.⁡ ​‌‌⁡⁣⁢⁢​‌‌‌Создание⁡ ⁡⁣⁣⁢пирамиды⁡ ⁡⁣⁢⁢из⁡ ⁡⁣⁣⁢'*'
+
+let lines = 10;
+let star = '';
+
+for (let i = 0; i <= lines; i++) {
+  for (let j = 0; j < lines - i; j++) {
+    star += " ";
+  }
+  for (let k = 0; k < 2 * i + 1; k++) {
+    star += "*";
+  }
+  star += " " + "\n";
+}
+console.log(star);
