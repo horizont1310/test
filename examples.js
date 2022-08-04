@@ -323,11 +323,10 @@ function students() {
   console.log(sortStudentsByGroups(students));
 }
 
-
 //⁡⁣⁢⁢Это одна из классических задач в программировании на формирование самых разных фигур при помощи кода.⁡ ​‌‌⁡⁣⁢⁢​‌‌‌Создание⁡ ​‌‌‍⁡⁣⁣⁢пирамиды⁡​ ⁡⁣⁢⁢из⁡ ⁡⁣⁣​‌‌‍⁡⁣⁣⁢'*'⁡​
 
 let lines = 10;
-let star = '';
+let star = "";
 
 for (let i = 0; i <= lines; i++) {
   for (let j = 0; j < lines - i; j++) {
@@ -346,8 +345,8 @@ console.log(star);
 function calculateVolumeAndArea(num) {
   let volume = num ** 3;
   let area = 6 * num ** 2;
-  if (typeof(num) != 'number' || num <= 0 || !Number.isInteger(num)) {
-      return 'При вычислении произошла ошибка';
+  if (typeof num != "number" || num <= 0 || !Number.isInteger(num)) {
+    return "При вычислении произошла ошибка";
   }
   return `Объем куба: ${volume}, площадь всей поверхности: ${area}`;
 }
@@ -360,17 +359,42 @@ console.log(calculateVolumeAndArea(5));
 ⁡⁣⁢⁢Если число 0 или больше 36, то сообщение:⁡ ⁡⁢⁢⁣"Таких мест в вагоне не существует"⁡ */
 
 function compartment(num) {
-  if (typeof(num) != 'number' || typeof(num) == 'string' || !Number.isInteger(num)) {
-      return "Ошибка. Проверьте правильность введенного номера места";
-  } else if (num == 0 || num < 0 || num > 36){
-      return "Таких мест в вагоне не существует";
+  if (
+    typeof num != "number" ||
+    typeof num == "string" ||
+    !Number.isInteger(num)
+  ) {
+    return "Ошибка. Проверьте правильность введенного номера места";
+  } else if (num == 0 || num < 0 || num > 36) {
+    return "Таких мест в вагоне не существует";
   } else {
-      for (let i = 4; i <= 36; i = i + 4) {
-          if (num <= i) {
-              return Math.ceil(i / 4);
-          }
+    for (let i = 4; i <= 36; i = i + 4) {
+      if (num <= i) {
+        return Math.ceil(i / 4);
       }
+    }
   }
 }
 
 console.log(compartment(33));
+
+
+// ⁡⁣⁢⁢Замыкание, пример с счетчиком⁡
+
+function createCounter() {
+  let counter = 0;
+
+  const myFunction = function () {
+    counter = counter + 1;
+    return counter;
+  };
+
+  return myFunction;
+}
+
+const increment = createCounter();
+const c1 = increment();
+const c2 = increment();
+const c3 = increment();
+
+console.log(c1, c2, c3);
