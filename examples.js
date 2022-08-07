@@ -378,7 +378,6 @@ function compartment(num) {
 
 console.log(compartment(33));
 
-
 // ⁡⁣⁢⁢Замыкание, пример с счетчиком⁡
 
 function createCounter() {
@@ -398,3 +397,70 @@ const c2 = increment();
 const c3 = increment();
 
 console.log(c1, c2, c3);
+
+//⁡⁣⁢⁢Создайте функцию, которая принимает в себя целое число минут и ⁡⁣⁣⁢возвращает время в нужном формате строки⁡⁣⁢⁢. (Смотри пример). Обратите внимание на окончание слова "час" - оно меняется в зависимости от цифры. Если вместо аргумента приходит не число, дробное или отрицательное число - функция возвращает строку "Ошибка, проверьте данные"⁡
+
+function getTimeFromMinutes(minutesTotal) {
+  if (
+    typeof minutesTotal !== "number" ||
+    minutesTotal < 0 ||
+    !Number.isInteger(minutesTotal)
+  ) {
+    return "Ошибка, проверьте данные";
+  }
+
+  const hours = Math.floor(minutesTotal / 60);
+  const minutes = minutesTotal % 60;
+
+  let hoursStr = "";
+
+  switch (hours) {
+    case 0:
+      hoursStr = "часов";
+      break;
+    case 1:
+      hoursStr = "час";
+      break;
+    case 2:
+    case 3:
+    case 4:
+      hoursStr = "часа";
+      break;
+    default:
+      hoursStr = "часов";
+  }
+
+  return `Это ${hours} ${hoursStr} и ${minutes} минут`;
+}
+getTimeFromMinutes(180);
+
+//⁡⁢⁢⁣Здесь объект счётчика создан с помощью функции-конструктора.(Несомненно, он отлично будет работать.Обе вложенные функции были созданы с одним и тем же внешним лексическим окружением, так что они имеют доступ к одной и той же переменной count)⁡
+
+function Counter() {
+  let count = 0;
+
+  this.up = function() {
+    return ++count;
+  };
+
+  this.down = function() {
+    return --count;
+  };
+}
+
+let counter = new Counter();
+
+alert( counter.up() ); // 1
+alert( counter.up() ); // 2
+alert( counter.down() ); // 1
+
+//⁡⁢⁢⁣Напишите функцию sum, которая работает таким образом: sum(a)(b) = a+b.⁡
+
+function sum(a) {
+
+  return function(b) {
+    return a + b; // берёт "a" из внешнего лексического окружения
+  };
+
+}
+console.log( sum(1)(2) );
