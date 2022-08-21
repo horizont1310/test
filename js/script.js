@@ -1,10 +1,16 @@
 "use strict";
 
-function sum(a) {
+function factorial(num) {
+    if (num <= 0) {
+        return 1;
+    } else {
+        if (!Number.isInteger(num) || typeof(num) != 'number') {
+            return 'Введите цело число';
+        } else {
+            return num * factorial(num - 1);
+        }    
+    }
+}  
+   
 
-    return function(b) {
-      return a + b; // берёт "a" из внешнего лексического окружения
-    };
-  
-  }
-console.log( sum(1)(2) );
+console.log(factorial(5));

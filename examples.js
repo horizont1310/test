@@ -439,28 +439,66 @@ getTimeFromMinutes(180);
 function Counter() {
   let count = 0;
 
-  this.up = function() {
+  this.up = function () {
     return ++count;
   };
 
-  this.down = function() {
+  this.down = function () {
     return --count;
   };
 }
 
 let counter = new Counter();
 
-alert( counter.up() ); // 1
-alert( counter.up() ); // 2
-alert( counter.down() ); // 1
+alert(counter.up()); // 1
+alert(counter.up()); // 2
+alert(counter.down()); // 1
 
 //⁡⁢⁢⁣Напишите функцию sum, которая работает таким образом: sum(a)(b) = a+b.⁡
 
 function sum(a) {
-
-  return function(b) {
+  return function (b) {
     return a + b; // берёт "a" из внешнего лексического окружения
   };
-
 }
-console.log( sum(1)(2) );
+console.log(sum(1)(2));
+
+// ​‌‌‍⁡⁣⁢⁢рекурсия⁡​
+
+function pow(x, n) {
+  let result = 1;
+
+  for (let i = 0; i < n; i++) {
+    result *= x;
+  }
+  return result;
+}
+
+function Npow(x, n) {
+  if (n === 1) {
+    return x;
+  } else {
+    return x * Npow(x, n - 1);
+  }
+}
+
+console.log(pow(2, 2));
+console.log(Npow(2, 5));
+
+
+// ​‌‌‍⁡⁣⁢⁢Факториал⁡​
+
+function factorial(num) {
+  if (num <= 0) {
+      return 1;
+  } else {
+      if (!Number.isInteger(num) || typeof(num) != 'number') {
+          return 'Введите цело число';
+      } else {
+          return num * factorial(num - 1);
+      }    
+  }
+}  
+ 
+
+console.log(factorial(5));
