@@ -485,20 +485,389 @@ function Npow(x, n) {
 console.log(pow(2, 2));
 console.log(Npow(2, 5));
 
-
 // ​‌‌‍⁡⁣⁢⁢Факториал⁡​
 
 function factorial(num) {
   if (num <= 0) {
-      return 1;
+    return 1;
   } else {
-      if (!Number.isInteger(num) || typeof(num) != 'number') {
-          return 'Введите цело число';
-      } else {
-          return num * factorial(num - 1);
-      }    
+    if (!Number.isInteger(num) || typeof num != "number") {
+      return "Введите цело число";
+    } else {
+      return num * factorial(num - 1);
+    }
   }
-}  
- 
+}
 
 console.log(factorial(5));
+
+/* ⁡⁢⁢⁣Задание:
+
+В каждой книге есть n страниц с номерами страниц от 1 до n. Написать функцию amountOfPages, аргумент которой summary составляется путем сложения количества цифр всех номеров страниц. Эта функция возвращает число - количество страниц n в книге. Чтобы было понятно что такое количество цифр, давайте рассмотрим примеры.
+
+Пример:
+
+Если на входе функции summary = 25, то на результат должен быть 17. Всего в числах от 1 до 17 содержится 25 цифр: 1234567891011121314151617.
+
+Функция на вход как раз принимает это общее количество цифр, а возвращает конечное число, то есть последнюю страницу книги.⁡ */
+
+function amountOfPages(summary) {
+  let result = "";
+  let n = 0;
+
+  for (let i = 1; i <= summary; i++) {
+    result += i;
+    if (result.length === summary) {
+      n = i;
+      break;
+    }
+  }
+
+  return n;
+}
+amountOfPages(25);
+
+/* ⁡⁢⁢⁣Задание:
+
+Панграмма — это предложение, в котором каждая буква алфавита встречается хотя бы по одному разу без повторений. Например, предложение «The quick brown fox jumps over the lazy dog» является панграммой, поскольку в нем хотя бы один раз используются буквы от A до Z (регистр значения не имеет).
+
+Напишите функцию isPangram, которая принимает в себя строку и возвращает логическое значение. Если строка является панграммой - вернется true, если нет - false.⁡ */
+
+function isPangram(string) {
+  string = string.toLowerCase();
+  return "abcdefghijklmnopqrstuvwxyz".split("").every(function (x) {
+    return string.indexOf(x) !== -1;
+  });
+}
+
+//⁡⁣⁢⁢работа с датами⁡
+function data() {
+  let date = new Date(),
+    hour = date.getHours(),
+    minutes = date.getMinutes(),
+    sec = date.getSeconds(),
+    day = date.getDate(),
+    NumbOfDay = date.getDay(),
+    month = date.getMonth(),
+    year = date.getFullYear();
+
+  function now(day) {
+    let days = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ];
+    return days[day];
+  }
+
+  alert(now(NumbOfDay));
+}
+
+// ⁡⁣⁢⁢Узнать старую дату⁡
+
+function oldDate() {
+  let oldDate = new Date(2015, 0, 7);
+  let thatDay = oldDate.getDay();
+
+  function now(day) {
+    let days = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+    ];
+    return days[day];
+  }
+
+  alert(now(thatDay));
+}
+
+//⁡⁣⁢⁢Вывести текущий месяц⁡
+
+let months = [
+  "янв",
+  "фев",
+  "мар",
+  "апр",
+  "май",
+  "июн",
+  "июл",
+  "авг",
+  "сен",
+  "окт",
+  "ноя",
+  "дек",
+];
+let date = new Date();
+let month = date.getMonth();
+alert(months[month]);
+
+// ⁡⁣⁢⁢Сделать таймер с двумя кнопками(старт таймера(она будет и запускать с того же места))⁡
+
+let inputStart = document.querySelector("#start"),
+  inputEnd = document.querySelector("#end"),
+  div = document.querySelector("#div");
+
+inputStart.addEventListener("click", () => {
+  function start() {
+    div.textContent = parseInt(div.textContent) + 1;
+  }
+  let time = setInterval(start, 1000);
+
+  inputEnd.addEventListener("click", () => {
+    let end = clearInterval(time);
+  });
+});
+
+// ⁡⁣⁢⁢Таймер с выведением текущего времени⁡
+
+function timer() {
+  let pTimer = document.querySelector("#timer");
+
+  function time() {
+    const date = new Date();
+    let hour = date.getHours(),
+      minutes = date.getMinutes(),
+      sec = date.getSeconds();
+
+    function getZero(num) {
+      if (num >= 0 && num < 10) {
+        return `0${num}`;
+      } else {
+        return num;
+      }
+    }
+
+    pTimer.textContent = `${getZero(hour)}:${getZero(minutes)}:${getZero(sec)}`;
+  }
+  let timer = setInterval(time, 1000);
+}
+
+// ⁡⁣⁢⁢тайме с отсчетом в обратную сторону⁡
+
+function ti() {
+  let timer = document.querySelector("#timer"),
+    endTime = document.querySelector("#timerEnd"),
+    startTimer = document.querySelector("#tap");
+
+  endTime.style.display = "none";
+
+  startTimer.addEventListener("click", () => {
+    function start() {
+      let value = parseInt(timer.textContent);
+
+      if (value == 0) {
+        endTime.style.display = "block";
+        clearInterval(star);
+      } else {
+        timer.textContent = value - 1;
+      }
+    }
+    let star = setInterval(start, 500);
+  });
+}
+
+// ⁡⁣⁢⁢простой слайдер через таймер⁡
+
+function sl() {
+  let imgs = ["img/1.png", "img/2.png", "img/3.png"];
+  let slider = document.querySelector("#slider");
+  let img = slider.querySelector("img");
+
+  img.src = imgs[0];
+  let i = 1;
+  let timer = setInterval(function () {
+    img.src = imgs[i];
+
+    i++;
+
+    if (i == imgs.length) {
+      i = 0;
+    }
+  }, 1000);
+}
+
+// ⁡⁣⁢⁢мой слайдер на 3 картинки⁡
+//⁡⁢⁣⁢HTML⁡
+{
+  /* <div class="slider">
+<img src="">
+<img src="">
+<img src="">
+</div> */
+}
+function ebanina() {
+  let wrapper = document.querySelector(".slider"),
+    img = wrapper.querySelectorAll("img"),
+    tap = document.querySelector(".tap");
+
+  function slide() {
+    for (let i = 0; i < img.length; i++) {
+      img[i].src = `img/${i + 1}.png`;
+      if (i == 3) {
+        break;
+      }
+    }
+  }
+  slide();
+
+  function nextSlide() {
+    function first() {
+      img[0].src = `img/${2}.png`;
+      img[1].src = `img/${3}.png`;
+      img[2].src = `img/${1}.png`;
+    }
+    function ssecond() {
+      img[0].src = `img/${3}.png`;
+      img[1].src = `img/${1}.png`;
+      img[2].src = `img/${2}.png`;
+    }
+    function third() {
+      img[0].src = `img/${1}.png`;
+      img[1].src = `img/${2}.png`;
+      img[2].src = `img/${3}.png`;
+    }
+    let f = setTimeout(first, 500);
+    let g = setTimeout(ssecond, 1000);
+    let a = setTimeout(third, 1500);
+  }
+
+  tap.addEventListener("click", () => {
+    let timer = setInterval(nextSlide, 1500);
+  });
+}
+
+// ⁡⁢⁢⁣Работа с⁡ ⁡⁢⁣⁢this⁡
+
+function User(name, id) {
+  this.name = name;
+  this.id = id;
+  this.human = true;
+  this.hello = function () {
+    console.log(`Hello ${this.name}`);
+  };
+}
+
+User.prototype.exit = function () {
+  console.log(`User ${this.name} left`);
+};
+
+const ivan = new User("Ivan", 28);
+const alex = new User("Alex", 20);
+
+ivan.exit();
+
+ivan.hello();
+alex.hello();
+
+console.log(ivan, alex);
+
+/* function getSum(a, b) {
+  function sum() {
+      console.log(this.a);
+      return a + b;
+  }
+
+  console.log(sum());
+}
+
+getSum(4, 5); */
+
+// ⁡⁢⁢​‌‌‌⁡⁢⁢⁣JSON⁡​⁡
+
+function json() {
+  const user = {
+    name: "Ivan",
+    tel: "+38098383838",
+  };
+
+  console.log(JSON.stringify(user)); // переводит для работы с сервером
+  console.log(JSON.parse(JSON.stringify(user))); // переделывает то, что должно прийти с сервера
+}
+
+// ⁡⁢⁢⁣Создание глубокой копии⁡
+
+function clone() {
+  const user = {
+    name: "Ivan",
+    tel: "+38098383838",
+    parent: {
+      mom: "Ann",
+      dad: "Mike",
+    },
+  };
+
+  const clone = JSON.parse(JSON.stringify(user));
+}
+
+// Методы перебора массивов
+
+function methods() {
+  // Задачи:
+
+  // 1) У вас есть список фильмов с рейтингом в виде массива объектов. Напишите функцию showGoodFilms, которая будет принимать этот массив, а возвращать будет массив объектов только с теми фильмами, у которых рейтинг больше или равен 8.
+  // P.S. Это довольно типичная задача в программировании. Вспомните, на самых разных сайтах можно так фильтровать любые товары/фильмы/сериалы...
+
+  // 2) Напишите функцию showListOfFilms, которая будет принимать этот же массив, а возвращать будет строку, которая содержит названия фильмов через запятую.
+  // Пример:
+  // showListOfFilms(films) => "Titanic, Die hard 5, Matrix, Some bad film"
+
+  // 3) Напишите функцию setFilmsIds, которая будет принимать этот же массив, а возвращать будет такой же массив с фильмами, но у каждого фильма будет новое поле id. Значение этого поля установите по нумерации фильма.
+  // Пример:
+  // setFilmsIds(films)  => [   { name: 'Titanic', rating: 9, id: 0 },   { name: 'Die hard 5', rating: 5, id: 1 },   { name: 'Matrix', rating: 8, id: 2 },   { name: 'Some bad film', rating: 4, id: 3 } ]
+
+  // 4) Запишите результат предыдущей функции в переменную tranformedArray. Напишите функцию checkFilms, которая будет проверять, что в каждом из фильмов есть поле id. Если это так - функция возвращает true. Очевидно, что сейчас условие должно выполняться, если мы передаем checkFilms(tranformedArray); :)
+
+  // P.S. Вот тут вы столкнетесь с интересным моментом, который я хочу, чтобы вы запомнили. Внимательно проследите за тем, что происходит внутри коллбэка и что будет проверяться. Дополнительно расписал этот момент в комментариях в ответах.
+
+  const films = [
+    {
+      name: "Titanic",
+      rating: 9,
+    },
+    {
+      name: "Die hard 5",
+      rating: 5,
+    },
+    {
+      name: "Matrix",
+      rating: 8,
+    },
+    {
+      name: "Some bad film",
+      rating: 4,
+    },
+  ];
+
+  // function showGoodFilms(arr) {
+  //     return arr.filter(film => film.rating >= 8);
+  // }
+  // console.log(showGoodFilms(films));
+
+  // function showListOfFilms(arr) {
+  //     return arr.map(film => film.name).reduce((sum, current) => `${sum}, ${current}`);
+  // }
+  // console.log(showListOfFilms(films));
+
+  function setFilmsIds(arr) {
+    return arr.map((film, i) => {
+      film.id = i;
+      return film;
+    });
+  }
+
+  const tranformedArray = setFilmsIds(films);
+
+  function checkFilms(arr) {
+    return arr.every((film) => film.id || film.id === 0);
+    // return arr.every(film => film.id || film.id === 0 ? true : false);
+  }
+  console.log(checkFilms(films));
+}
