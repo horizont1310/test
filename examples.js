@@ -807,7 +807,7 @@ function clone() {
   const clone = JSON.parse(JSON.stringify(user));
 }
 
-// Методы перебора массивов
+// ⁡⁢⁢⁣Методы перебора массивов⁡
 
 function methods() {
   // Задачи:
@@ -870,4 +870,149 @@ function methods() {
     // return arr.every(film => film.id || film.id === 0 ? true : false);
   }
   console.log(checkFilms(films));
+}
+
+// ⁡⁢⁢⁣Вторая звдвча на Методы перебора массивов⁡
+
+function methods() {
+  // Задачи:
+
+  // 1) У вас есть небольшой массив с данными о доходах каждой торговой точки. Напишите функцию getPositiveIncomeAmount, которая принимает этот массив данных и возвращает сумму только положительных значений из каждого объекта. (число)
+  // Пример:
+  // getPositiveIncomeAmount(funds) => 13300
+
+  // 2) Напишите функцию getTotalIncomeAmount, которая тоже принимает этот массив данных. Если хотя бы один из объектов содержит отрицательное значение поля amount, то функция возвращает сумму всех значений. (число) Если таких значений нет - запускается функция getPositiveIncomeAmount с тем же массивом данных.
+  // Пример:
+  // getTotalIncomeAmount(funds) => -500
+
+  const funds = [
+    { amount: -1400 },
+    { amount: 2400 },
+    { amount: -1000 },
+    { amount: 500 },
+    { amount: 10400 },
+    { amount: -11400 },
+  ];
+
+  const getPositiveIncomeAmount = (data) => {
+    return data
+      .filter((item) => item.amount > 0)
+      .reduce((sum, current) => sum + current.amount, 0);
+  };
+  console.log(getPositiveIncomeAmount(funds));
+
+  const getTotalIncomeAmount = (data) => {
+    return data.some((item) => item.amount < 0)
+      ? data.reduce((sum, current) => sum + current.amount, 0)
+      : getPositiveIncomeAmount(data);
+  };
+  getTotalIncomeAmount(funds);
+}
+
+//⁡⁣⁢⁢Даны картинки. Привяжите к каждой картинке событие, чтобы по клику на картинку алертом выводился ее src⁡
+
+function src() {
+  const slider = document.querySelector(".slider"),
+    img = document.querySelectorAll("img");
+
+  img.forEach((el) => {
+    el.addEventListener("click", () => alert(el.getAttribute("src")));
+  });
+}
+
+//⁡⁣⁢⁢Даны ссылки. Привяжите всем ссылкам событие - по наведению на ссылку в атрибут title запишется ее текст.⁡
+
+function writeTitleLink() {
+  const slider = document.querySelector(".slider"),
+    links = slider.querySelectorAll("a");
+
+  links.forEach((el) => {
+    el.addEventListener("mouseover", function () {
+      this.title = this.href;
+    });
+  });
+}
+
+//⁡⁣⁢⁢Дополните предыдущую задачу: после первого наведению на ссылку следует отвязать от нее событие, которое добавляет href в конец текста⁡
+
+function addBefore() {
+  const slider = document.querySelector(".slider"),
+    links = slider.querySelectorAll("a");
+
+  links.forEach((el) => {
+    el.addEventListener("mouseover", function my() {
+      this.innerHTML += ` (${this.href}) `;
+      this.removeEventListener("mouseover", my);
+    });
+  });
+}
+
+//⁡⁣⁢⁢Привяжите всем инпутам следующее событие - по потери фокуса каждый инпут выводит свое value в абзац с id="test"⁡
+
+function mouseout() {
+  const input = document.querySelectorAll("input"),
+    paragraph = document.querySelector("#test");
+
+  input.forEach((item) => {
+    item.addEventListener("mouseout", function out() {
+      paragraph.innerHTML = this.value;
+    });
+  });
+}
+
+// ⁡⁣⁢⁢Для всех инпутов сделайте так, чтобы они выводили свой value алертом при нажатии на любой из них, но только по первому нажатию. Повторное нажатие на инпут не должно вызывать реакции.⁡
+
+function mouseClick() {
+  const input = document.querySelectorAll("input");
+
+  input.forEach((item) => {
+    item.addEventListener("click", function out() {
+      alert(this.value);
+      this.removeEventListener("click", out);
+    });
+  });
+}
+
+//⁡⁣⁢⁢Даны абзацы с числами. По нажатию на абзац в нем должен появится квадрат числа, которое он содержит⁡
+
+function square() {
+  const input = document.querySelectorAll("p");
+
+  input.forEach((item) => {
+    item.addEventListener("mouseover", function () {
+      this.innerHTML = this.innerHTML * this.innerHTML;
+    });
+  });
+}
+
+//⁡⁣⁢⁢Даны инпуты. Сделайте так, чтобы все инпуты по потери фокуса проверяли свое содержимое на правильное количество символов. Сколько символов должно быть в инпуте, указывается в атрибуте data-length. Если вбито правильное количество, то граница инпута становится зеленой, если неправильное - красной⁡
+//HTML
+//    <input type="text" data-length="4" />
+//<input type="text" data-length="7" />
+//<input type="text" data-length="9" />
+
+function borderColor() {
+  const input = document.querySelectorAll("input");
+
+  input.forEach((item) => {
+    item.addEventListener("blur", function () {
+      this.value.length <= this.dataset.length
+        ? (item.style.borderColor = "green")
+        : (item.style.borderColor = "red");
+    });
+  });
+}
+
+//⁡⁣⁢⁢Даны дивы. По первому нажатию на каждый див он красится красным фоном, по второму красится обратно и так далее каждый клик происходит чередование фона. Сделайте так, чтобы было две функции: одна красит в красный цвет, другая в зеленый и они сменяли друг друга через removeEventListener⁡
+
+function changeColorDiv() {
+  const div = document.querySelectorAll("div");
+
+  div.forEach((item) => {
+    item.addEventListener("mouseover", function () {
+      this.style.backgroundColor === "white"
+        ? (this.style.background = "red")
+        : (this.style.background = "white");
+    });
+  });
 }

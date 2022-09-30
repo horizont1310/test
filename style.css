@@ -18,3 +18,6 @@ button {
   background-color: yellow;
   border: none;
 }
+.slider {
+  width: 50px;
+}
