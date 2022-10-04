@@ -1016,3 +1016,44 @@ function changeColorDiv() {
     });
   });
 }
+
+// ⁡⁣⁢⁢Дан элемент #elem. Найдите его соседа снизу его соседа снизу (следующий элемент за соседним) и добавьте ему в конец текст '!'.⁡
+
+function nextElementSibling() {
+  const before = document.querySelector("#before");
+
+  before.nextElementSibling.nextElementSibling.insertAdjacentHTML(
+    "beforeend",
+    "!"
+  );
+}
+
+// ⁡⁣⁢⁢Дан массив. Создайте ul через createElement, затем вставьте каждый элемент этого массива в отдельную li внутри этой ul, затем вставьте эту ul в конец body.⁡
+
+function createElement() {
+  const button = document.querySelector("button");
+
+  const arr = ["First", "Second", "Third", "Four", "Five"];
+
+  button.addEventListener("click", () => {
+    let ul = document.createElement("ul");
+    arr.forEach((item) => {
+      let li = document.createElement("li");
+      li.append(item);
+      ul.append(li);
+    });
+    document.body.appendChild(ul);
+  });
+}
+
+//⁡⁣⁢⁢Дан инпут. В него вводится число. По потери фокуса сделайте так, чтобы каждая цифра вставилась в новый инпут. Инпутов для цифр изначально не существует, они должны создаться в процессе работы скрипта.⁡
+
+function blurInput() {
+  const input = document.querySelector("input");
+
+  input.addEventListener("blur", () => {
+    let newInp = input.cloneNode(true);
+    newInp.style.cssText = "display: block; margin-top: 10px";
+    document.body.append(newInp);
+  });
+}
