@@ -1057,3 +1057,126 @@ function blurInput() {
     document.body.append(newInp);
   });
 }
+
+//⁡⁣⁢⁢Дан элемент #elem. По клику на него увеличьте его ширину 3 раза⁡
+
+function width() {
+  let element = document.querySelector(".element"),
+    button = document.querySelector("button");
+
+  button.addEventListener("click", () => {
+    element.style.width = element.scrollWidth * 3 + "px";
+  });
+}
+
+// ⁡⁣⁢⁢Координаты мыши по ⁡⁢⁣⁣X Y⁡⁡
+
+{
+  const body = document.querySelector(".body");
+
+  body.addEventListener("mousemove", (e) => {
+    body.innerHTML = `X: ${e.clientX} Y: ${e.clientY}`;
+  });
+}
+
+//⁡⁣⁢⁢вводите текст в инпут и по мере ввода вы будете видеть код нажатой клавиши и саму клавишу:⁡
+
+{
+  const input = document.querySelector("input");
+  let val = document.querySelector(".val");
+
+  input.addEventListener("keyup", (e) => {
+    input.value = "";
+    val.innerHTML = `Это клавиша: ${e.key}, её код: ${e.keyCode}`;
+  });
+}
+
+// ⁡⁣⁢⁢квадрат путешествует по всему окну, где кликнешь⁡
+
+{
+  let box = document.querySelector(".box");
+
+  window.addEventListener("click", (e) => {
+    box.style.left = e.clientX - 6 + "px";
+    box.style.top = e.clientY - 50 + "px";
+  });
+}
+
+//⁡⁣⁢⁢Дан элемент. Сделайте так, чтобы по клику на него он красился в красный цвет, но только если в момент клика нажата клавиша⁡ ⁡⁣⁣⁢Ctrl⁡.
+
+{
+  let box = document.querySelector(".box");
+
+  box.addEventListener("click", (e) => {
+    e.ctrlKey === true
+      ? (box.style.background = "red")
+      : (box.style.background = "blue");
+  });
+}
+
+//⁡⁣⁢⁢Дан элемент. Сделайте так, чтобы при клике на него и нажатой клавише ⁡⁣⁣⁢Ctrl⁡ ⁡⁣⁢⁢- в его текст записывалось '1', при нажатой клавише⁡ ⁡⁣⁣⁢Alt⁡ ⁡⁣⁢⁢- '2', а при нажатой клавише ⁡⁡⁣⁣⁢Shift⁡ ⁡⁣⁢⁢- '3'.⁡
+
+{
+  let element = document.querySelector(".element");
+
+  element.addEventListener("click", (e) => {
+    if (e.altKey === true) {
+      element.innerHTML = "2";
+    } else if (e.ctrlKey === true) {
+      element.innerHTML = "1";
+    } else if (e.shiftKey === true) {
+      element.innerHTML = "3";
+    } else {
+      element.innerHTML = "Нажми на Ctrl, Alt, Shift";
+    }
+  });
+}
+
+// Дан инпут. В него вводится текст и нажимается клавиша Enter (ее код имеет номер 13). Сделайте так, чтобы по нажатию Enter введенный текст попадал в абзац под инпутом, а содержимое инпута очищалось.
+
+{
+  let input = document.querySelector("input"),
+    p = document.querySelector("p");
+
+  input.addEventListener("keydown", (e) => {
+    if (e.code === "Enter") {
+      p.innerHTML = input.value;
+      input.value = "";
+    }
+  });
+}
+
+//Дана таблица с юзерами с двумя колонками: имя и фамилия. Под таблицей сделайте форму, с помощью которой можно будет добавить нового юзера в таблицу. Сделайте так, чтобы при клике на любую ячейку появлялся prompt, с помощью которого можно изменить текст ячейки. Задачу решите с помощью делегирования (то есть событие должно быть навешано на table).
+
+{
+  let user = document.querySelector(".user"),
+    input = document.querySelector("input");
+
+  input.addEventListener("keydown", (e) => {
+    if (e.code === "Enter") {
+      let li = document.createElement("li");
+      li.innerHTML = input.value;
+      user.insertAdjacentElement("beforeend", li);
+
+      let newBtn = function () {
+        let button = document.createElement("button");
+        button.innerHTML = "Remove";
+        li.insertAdjacentElement("beforeend", button);
+        button.addEventListener("click", (e) => {
+          e.target.closest("li").remove();
+          li.removeEventListener("click", newList);
+        });
+      };
+
+      let newList = function () {
+        let newValue = prompt("Debag", "");
+        li.innerHTML = newValue;
+        newBtn();
+      };
+      li.addEventListener("click", newList);
+
+      input.value = "";
+      newBtn();
+    }
+  });
+}
