@@ -1146,7 +1146,7 @@ function width() {
   });
 }
 
-//Дана таблица с юзерами с двумя колонками: имя и фамилия. Под таблицей сделайте форму, с помощью которой можно будет добавить нового юзера в таблицу. Сделайте так, чтобы при клике на любую ячейку появлялся prompt, с помощью которого можно изменить текст ячейки. Задачу решите с помощью делегирования (то есть событие должно быть навешано на table).
+//⁡⁣⁢⁢Дана таблица с юзерами с двумя колонками: имя и фамилия. Под таблицей сделайте форму, с помощью которой можно будет добавить нового юзера в таблицу. Сделайте так, чтобы при клике на любую ячейку появлялся prompt, с помощью которого можно изменить текст ячейки. Задачу решите с помощью делегирования (то есть событие должно быть навешано на table).⁡
 
 {
   let user = document.querySelector(".user"),
@@ -1178,5 +1178,49 @@ function width() {
       input.value = "";
       newBtn();
     }
+  });
+}
+
+// ⁡⁣⁢⁢На странице расположено несколько форм. В них есть инпуты, в инпутах числа. Дана кнопка. По нажатию на эту кнопку циклом переберите все формы на странице, затем циклом переберите все инпуты в каждой форме и найдите сумму чисел из всех этих инпутов.⁡
+
+{
+  const button = document.querySelector("button");
+
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    let count = [];
+    let result = 0;
+    const form = document.querySelectorAll("form");
+    form.forEach((elem) => {
+      const input = elem.querySelectorAll("input");
+      input.forEach((item) => {
+        count.push(+item.value);
+      });
+    });
+    for (let i = 0; i < count.length; i++) {
+      result += count[i];
+    }
+    alert(result);
+  });
+}
+
+// ⁡⁣⁢⁢Дан селект. Дан инпут. По изменению селекта выведите текст выбранного пункта в инпут.⁡
+
+{
+  let select = document.querySelector("select"),
+    input = document.querySelector("input");
+
+  select.addEventListener("change", () => (input.value = select.value));
+}
+
+// ⁡⁣⁢⁢Дан селект. Дан инпут. Дана кнопка. Сделайте так, чтобы в инпут можно было ввести число, нажать на кнопку и в селекте становился выбранным пункт с⁡ ⁡⁣⁢⁢этим номером.⁡
+
+{
+  let select = document.querySelector("select"),
+    input = document.querySelector("input"),
+    button = document.querySelector("button");
+
+  button.addEventListener("click", () => {
+    select.selectedIndex = +input.value - 1;
   });
 }

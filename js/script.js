@@ -1,32 +1,28 @@
 "use strict";
 
-let user = document.querySelector(".user"),
-  input = document.querySelector("input");
+let countriesSelect = document.querySelector("#countries-select"),
+    citiesSelect = document.querySelector("#cities-select");
 
-input.addEventListener("keydown", (e) => {
-  if (e.code === "Enter") {
-    let li = document.createElement("li");
-    li.innerHTML = input.value;
-    user.insertAdjacentElement("beforeend", li);
+const data = {
+  Ukraine: ['Kharkiv', 'Kyiv', 'Lviv'],
+  Canada: ['Ottava', 'Toronto', 'Cambridge'],
+  UK: ['London', 'Oxford', 'Liverpul']
+};
 
-    let newBtn = function() {
-      let button = document.createElement("button");
-      button.innerHTML = "Remove";
-      li.insertAdjacentElement("beforeend", button);    
-      button.addEventListener("click", (e) => {
-        e.target.closest("li").remove();
-        li.removeEventListener('click', newList);
-      });
-    };    
+const countries = Object.keys(data);
+addOption(countriesSelect, countries);
 
-    let newList = function () {
-      let newValue = prompt("Debag", "");
-      li.innerHTML = newValue;
-      newBtn();
-    };
-    li.addEventListener("click", newList);
+let defaultCities = data[countries[0]];
+addOption(citiesSelect, defaultCities);
 
-    input.value = "";
-    newBtn();
-  }
+countriesSelect.addEventListener("change", function () {
+  let cities = data[this.value];
+  citiesSelect.length = 0;
+  addOption(citiesSelect, cities);
 });
+
+function addOption(select, arr) {
+  for (let i = 0; i < arr.length; i++) {    
+    select.add(new Option(arr[i]));
+  }
+}
