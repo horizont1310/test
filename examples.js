@@ -1224,3 +1224,34 @@ function width() {
     select.selectedIndex = +input.value - 1;
   });
 }
+
+//Дан селект со списком стран. Сделайте так, чтобы при выборе страны рядом появлялся еще и селект со списком городов из этой страны.
+
+{
+  let countriesSelect = document.querySelector("#countries-select"),
+    citiesSelect = document.querySelector("#cities-select");
+
+  const data = {
+    Ukraine: ["Kharkiv", "Kyiv", "Lviv"],
+    Canada: ["Ottava", "Toronto", "Cambridge"],
+    UK: ["London", "Oxford", "Liverpul"],
+  };
+
+  const countries = Object.keys(data);
+  addOption(countriesSelect, countries);
+
+  let defaultCities = data[countries[0]];
+  addOption(citiesSelect, defaultCities);
+
+  countriesSelect.addEventListener("change", function () {
+    let cities = data[this.value];
+    citiesSelect.length = 0;
+    addOption(citiesSelect, cities);
+  });
+
+  function addOption(select, arr) {
+    for (let i = 0; i < arr.length; i++) {
+      select.add(new Option(arr[i]));
+    }
+  }
+}
