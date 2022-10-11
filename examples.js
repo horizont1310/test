@@ -1,5 +1,3 @@
-"use strict";
-
 // ⁡⁢⁣⁢Заполните массив 10-ю ⁡⁣⁣⁢иксами⁡ ⁡⁢⁣⁢с помощью цикла⁡
 
 function ex() {
@@ -1225,9 +1223,9 @@ function width() {
   });
 }
 
-//Дан селект со списком стран. Сделайте так, чтобы при выборе страны рядом появлялся еще и селект со списком городов из этой страны.
+//⁡⁣⁢⁢Дан селект со списком стран. Сделайте так, чтобы при выборе страны рядом появлялся еще и селект со списком городов из этой страны.⁡
 
-{
+function countries() {
   let countriesSelect = document.querySelector("#countries-select"),
     citiesSelect = document.querySelector("#cities-select");
 
@@ -1253,5 +1251,70 @@ function width() {
     for (let i = 0; i < arr.length; i++) {
       select.add(new Option(arr[i]));
     }
+  }
+}
+
+//⁡⁣⁢⁢Даны 3 селекта: с днем, с месяцем и годом. Сделайте так, чтобы некорректную дату нельзя было выбрать.⁡
+
+function data() {
+  let yearSelect = document.querySelector("#year-select"),
+    monthSelect = document.querySelector("#month-select"),
+    daySelect = document.querySelector("#day-select");
+
+  let date = new Date(),
+    currentYear = date.getFullYear(),
+    currentMonth = date.getMonth() + 1,
+    currentDay = date.getDate();
+
+  fillSelect(yearSelect, range(currentYear - 10, currentYear + 10));
+  fillSelect(monthSelect, range(1, 12));
+  fillSelect(daySelect, range(1, 31));
+
+  yearSelect.value = currentYear;
+  monthSelect.value = currentMonth;
+  daySelect.value = currentDay;
+
+  yearSelect.addEventListener("change", selectChangeHandle);
+  monthSelect.addEventListener("change", selectChangeHandle);
+  daySelect.addEventListener("change", selectChangeHandle);
+
+  yearSelect.addEventListener("focus", selectFocusHandle);
+  monthSelect.addEventListener("focus", selectFocusHandle);
+  daySelect.addEventListener("focus", selectFocusHandle);
+
+  function selectChangeHandle() {
+    if (checkkDate(yearSelect.value, monthSelect.value, daySelect.value)) {
+    } else {
+      this.value = this.dataset.default;
+    }
+  }
+
+  function selectFocusHandle() {
+    this.dataset.default = this.value;
+  }
+
+  function fillSelect(select, arr) {
+    arr.forEach(function (elem) {
+      select.add(new Option(elem));
+    });
+  }
+
+  function range(from, to) {
+    let result = [];
+
+    for (let i = from; i <= to; i++) {
+      result.push(i);
+    }
+
+    return result;
+  }
+
+  function checkkDate(year, month, day) {
+    let date = new Date(year, month - 1, day);
+    return (
+      date.getFullYear() == year &&
+      date.getMonth() == month - 1 &&
+      date.getDate() == day
+    );
   }
 }
