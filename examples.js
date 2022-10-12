@@ -1319,19 +1319,19 @@ function data() {
   }
 }
 
-
-//⁡⁢⁢⁣Парсер⁡ ⁡⁢⁣⁢без сервера⁡ 
+//⁡⁢⁢⁣Парсер⁡ ⁡⁢⁣⁢без сервера⁡
 
 function parser() {
   window.addEventListener("DOMContentLoaded", () => {
     const body = document.querySelector("body");
     let textNode = [];
-  
+
     function recurcy(element) {
       element.childNodes.forEach((node) => {
-        if (node.nodeName.match(/^H\d/)) { // ищет строку, которая начинается с H, а дальше идет какое-то число(Пр: h1, h2....)
+        if (node.nodeName.match(/^H\d/)) {
+          // ищет строку, которая начинается с H, а дальше идет какое-то число(Пр: h1, h2....)
           textNode.push(node.textContent); // пушит содержимое зоголовка
-        } else {        
+        } else {
           recurcy(node);
         }
       });
@@ -1347,30 +1347,83 @@ function parserServer() {
   window.addEventListener("DOMContentLoaded", () => {
     const body = document.querySelector("body");
     let textNode = [];
-  
+
     function recurcy(element) {
       element.childNodes.forEach((node) => {
-        if (node.nodeName.match(/^H\d/)) { // ищет строку, которая начинается с H, а дальше идет какое-то число(Пр: h1, h2....)
+        if (node.nodeName.match(/^H\d/)) {
+          // ищет строку, которая начинается с H, а дальше идет какое-то число(Пр: h1, h2....)
           const obj = {
             header: node.nodeName,
-            content: node.textContent
+            content: node.textContent,
           };
           textNode.push(obj); // пушит содержимое объекты с информацией
-        } else {        
+        } else {
           recurcy(node);
         }
       });
     }
     recurcy(body);
-    
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
+
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(textNode)
+      body: JSON.stringify(textNode),
     })
-    .then(response => response.json())
-    .then(json => console.log(json));
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+  });
+}
+
+// ⁡⁢⁣⁢​‌‌‌Slider​⁡
+
+function slider() {
+  const slides = document.querySelectorAll(".offer__slide"), //получение всех слайдов
+    prev = document.querySelector(".offer__slider-prev"), //стрелка влево
+    next = document.querySelector(".offer__slider-next"), // стрелка вправо
+    total = document.querySelector("#total"),  //  общее количество слайдов (в примере: 01/04)
+    current = document.querySelector("#current");   // текущий слайд (01 из объяснения выше)
+  let slideIndex = 1;    // номер слайда
+
+  showSlides(slideIndex);  // запускается с начальным слайдом
+
+  if (slides.length < 10) { // создаётся не в showSlides потому что оно не меняется
+    //Общее количество слайдов(отображается)
+    total.textContent = `0${slides.length}`;   //добавление 0, если чило меньше 10
+  } else {
+    total.textContent = slides.length;
+  }
+
+  function showSlides(n) {
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+
+    slides.forEach((item) => (item.style.display = "none"));
+
+    slides[slideIndex - 1].style.display = "block";
+
+    if (slides.length < 10) {
+      current.textContent = `0${slideIndex}`;
+    } else {
+      current.textContent = slideIndex;
+    }
+  }
+
+  function plusSlides(n) {
+    showSlides((slideIndex += n));
+  }
+
+  prev.addEventListener("click", () => {
+    plusSlides(-1);
+  });
+
+  next.addEventListener("click", () => {
+    plusSlides(1);
   });
 }
