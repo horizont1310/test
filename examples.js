@@ -1341,7 +1341,7 @@ function parser() {
   });
 }
 
-// ⁡⁢⁢⁣Парсер ⁡⁢⁣⁢с сервером⁡
+// ​‌‌‌⁡⁢⁢⁣Парсер ⁡⁢⁣⁢с сервером​⁡
 
 function parserServer() {
   window.addEventListener("DOMContentLoaded", () => {
@@ -1376,21 +1376,22 @@ function parserServer() {
   });
 }
 
-// ⁡⁢⁣⁢​‌‌‌Slider​⁡
+// ⁡⁢⁣⁢​‌‌‌Slider (простой)​⁡
 
 function slider() {
   const slides = document.querySelectorAll(".offer__slide"), //получение всех слайдов
     prev = document.querySelector(".offer__slider-prev"), //стрелка влево
     next = document.querySelector(".offer__slider-next"), // стрелка вправо
-    total = document.querySelector("#total"),  //  общее количество слайдов (в примере: 01/04)
-    current = document.querySelector("#current");   // текущий слайд (01 из объяснения выше)
-  let slideIndex = 1;    // номер слайда
+    total = document.querySelector("#total"), //  общее количество слайдов (в примере: 01/04)
+    current = document.querySelector("#current"); // текущий слайд (01 из объяснения выше)
+  let slideIndex = 1; // номер слайда
 
-  showSlides(slideIndex);  // запускается с начальным слайдом
+  showSlides(slideIndex); // запускается с начальным слайдом
 
-  if (slides.length < 10) { // создаётся не в showSlides потому что оно не меняется
+  if (slides.length < 10) {
+    // создаётся не в showSlides потому что оно не меняется
     //Общее количество слайдов(отображается)
-    total.textContent = `0${slides.length}`;   //добавление 0, если чило меньше 10
+    total.textContent = `0${slides.length}`; //добавление 0, если чило меньше 10
   } else {
     total.textContent = slides.length;
   }
@@ -1426,4 +1427,205 @@ function slider() {
   next.addEventListener("click", () => {
     plusSlides(1);
   });
+}
+
+// ⁡⁢⁣⁢​‌‌⁡⁢⁣⁢​‌‌‌Slider (из food)​⁡
+
+//в HTML добавлен offer__slider-inner
+
+function sliderFood() {
+  const slides = document.querySelectorAll(".offer__slide"),
+    slider = document.querySelector(".offer__slider"),
+    prev = document.querySelector(".offer__slider-prev"),
+    next = document.querySelector(".offer__slider-next"),
+    total = document.querySelector("#total"),
+    current = document.querySelector("#current"),
+    slidesWrapper = document.querySelector(".offer__slider-wrapper"),
+    slidesField = document.querySelector(".offer__slider-inner"),
+    width = window.getComputedStyle(slidesWrapper).width; // получение ширины, которое занимает этот блок
+  let slideIndex = 1;
+  let offset = 0;
+
+  slidesField.style.width = 100 * slides.length + "%";
+  slidesField.style.display = "flex";
+  slidesField.style.transition = "0.5s all";
+
+  slidesWrapper.style.overflow = "hidden";
+
+  if (slides.length < 10) {
+    //Общее количество слайдов(отображается)
+    total.textContent = `0${slides.length}`;
+    current.textContent = `0${slideIndex}`;
+  } else {
+    total.textContent = slides.length;
+    current.textContent = slideIndex;
+  }
+
+  slides.forEach((slide) => {
+    slide.style.width = width;
+  });
+
+  slider.style.position = "relative";
+
+  const indicators = document.createElement("ol"), //создание поля, для точек
+    dots = [];
+  indicators.classList.add("carousel-indicators");
+  indicators.style.cssText = `
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    margin-right: 15%;
+    margin-left: 15%;
+    list-style: none;
+`;
+  slider.append(indicators);
+
+  for (let i = 0; i < slides.length; i++) {
+    // создание точек
+    const dot = document.createElement("li");
+    dot.setAttribute("data-slide-to", i + 1);
+    dot.style.cssText = `
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: 30px;
+    height: 6px;
+    margin-right: 3px;
+    margin-left: 3px;
+    cursor: pointer;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    opacity: .5;
+    transition: opacity .6s ease;
+  `;
+    if (i == 0) {
+      dot.style.opacity = 1;
+    }
+    indicators.append(dot);
+    dots.push(dot);
+  }
+  function dotsOpacity() {
+    dots.forEach((dot) => (dot.style.opacity = ".5"));
+    dots[slideIndex - 1].style.opacity = 1;
+  }
+
+  function sliderLengthLessTen() {
+    if (slides.length < 10) {
+      current.textContent = `0${slideIndex}`;
+    } else {
+      current.textContent = slideIndex;
+    }
+  }
+
+  function slidesTransform() {
+    slidesField.style.transform = `translateX(-${offset}px)`;
+  }
+
+  next.addEventListener("click", () => {
+    if (offset == parseInt(width) * (slides.length - 1)) {
+      offset = 0;
+    } else {
+      offset += parseInt(width);
+    }
+
+    if (slideIndex == slides.length) {
+      slideIndex = 1;
+    } else {
+      slideIndex++;
+    }
+
+    slidesTransform();
+    sliderLengthLessTen();
+    dotsOpacity();
+  });
+
+  prev.addEventListener("click", () => {
+    if (offset == 0) {
+      offset = parseInt(width) * (slides.length - 1);
+    } else {
+      offset -= parseInt(width);
+    }
+
+    if (slideIndex == 1) {
+      slideIndex = slides.length;
+    } else {
+      slideIndex--;
+    }
+
+    slidesTransform();
+    sliderLengthLessTen();
+    dotsOpacity();
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", (e) => {
+      const slideTo = e.target.getAttribute("data-slide-to");
+
+      slideIndex = slideTo;
+      offset = parseInt(width) * (slideTo - 1);
+
+      slidesTransform();
+      sliderLengthLessTen();
+      dotsOpacity();
+    });
+  });
+}
+
+// ⁡⁢⁢⁣Регулярные выржения⁡
+
+function regExp() {
+  const ans = prompt("Введите ваше имя");
+
+  const reg = /\d/g;
+
+  console.log(ans.match(reg));
+  console.log(ans.match(reg));
+
+  const pass = prompt("Password");
+
+  console.log(pass.replace(/\./g, "*"));
+
+  const str = "My name is R1D3";
+
+  console.log(str.match(/\w\d\w\d/i));
+}
+
+// ⁡⁢⁢⁣Get / Set (геттеры и сеттеры)⁡
+
+function getSet() {
+  const persone = {
+    name: "Alex",
+    age: 25,
+
+    get userAge() {
+      return this.age;
+    },
+
+    set userAge(num) {
+      this.age = num;
+    },
+  };
+
+  console.log((persone.userAge = 30));
+  console.log(persone.userAge);
+}
+
+// ⁡⁢⁢⁣try / catch⁡
+
+{
+  try {
+    console.log("Normal");
+    console.log(a);
+    console.log("result");
+  } catch (error) {
+    console.log(error.name);
+    console.log(error.massage);
+  } finally {
+    console.log("I definitely will be");
+  }
 }
